@@ -265,6 +265,7 @@
   }
   footer a{ color: var(--accent); text-decoration: none; }
   footer a:hover{ text-decoration: underline; }
+  .last-commit{ font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 0.8rem; }
 
   @media (prefers-reduced-motion: reduce){
     *{ transition: none !important; }
@@ -289,7 +290,7 @@
 
     <div class="projects">
 
-      <article class="project">
+      <article class="project" data-repo="BlueKeyboard013/AlbumCollage">
         <div class="collage" aria-hidden="true">
           <span></span><span></span><span></span>
           <span></span><span></span><span></span>
@@ -332,10 +333,73 @@
   </main>
 
   <footer>
-    <span>Updated September 2026</span>
+    <span id="last-commit" class="last-commit">Checking latest activity…</span>
     <a href="mailto:jondevlaurent@gmail.com">Get in touch ↗</a>
   </footer>
 
 </div>
+
+<script>
+(function(){
+  var target = document.getElementById('last-commit');
+  var repos = Array.prototype.map.call(
+    document.querySelectorAll('[data-repo]'),
+    function(el){ return el.getAttribute('data-repo'); }
+  );
+  if (!target || repos.length === 0) return;
+
+  function timeAgo(dateStr){
+    var mins = Math.floor((Date.now() - new Date(dateStr).getTime()) / 60000);
+    if (mins < 1) return 'just now';
+    if (mins < 60) return mins + (mins === 1 ? ' minute ago' : ' minutes ago');
+    var hrs = Math.floor(mins / 60);
+    if (hrs < 24) return hrs + (hrs === 1 ? ' hour ago' : ' hours ago');
+    var days = Math.floor(hrs / 24);
+    if (days < 30) return days + (days === 1 ? ' day ago' : ' days ago');
+    var months = Math.floor(days / 30);
+    if (months < 12) return months + (months === 1 ? ' month ago' : ' months ago');
+    var years = Math.floor(months / 12);
+    return years + (years === 1 ? ' year ago' : ' years ago');
+  }
+
+  function truncate(str, max){
+    str = str.split('\n')[0];
+    return str.length > max ? str.slice(0, max - 1) + '…' : str;
+  }
+
+  Promise.all(repos.map(function(repo){
+    return fetch('https://api.github.com/repos/' + repo + '/commits?per_page=1')
+      .then(function(r){ return r.ok ? r.json() : null; })
+      .then(function(data){
+        if (!data || !data[0]) return null;
+        var c = data[0];
+        return {
+          repo: repo,
+          message: c.commit.message,
+          date: c.commit.author.date,
+          url: c.html_url
+        };
+      })
+      .catch(function(){ return null; });
+  })).then(function(results){
+    var valid = results.filter(Boolean);
+    if (valid.length === 0){
+      target.textContent = '';
+      return;
+    }
+    valid.sort(function(a, b){ return new Date(b.date) - new Date(a.date); });
+    var latest = valid[0];
+    var repoName = latest.repo.split('/')[1];
+    var link = document.createElement('a');
+    link.href = latest.url;
+    link.target = '_blank';
+    link.rel = 'noopener';
+    link.textContent = '"' + truncate(latest.message, 60) + '"';
+    target.textContent = 'Last shipped ';
+    target.appendChild(link);
+    target.appendChild(document.createTextNode(' — ' + repoName + ' · ' + timeAgo(latest.date)));
+  });
+})();
+</script>
 </body>
 </html>
