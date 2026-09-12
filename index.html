@@ -140,7 +140,7 @@
   .project:hover{ border-color: var(--accent); }
   @media (max-width: 540px){
     .project{ grid-template-columns: 1fr; }
-    .collage{ width: 56px; height: 56px; }
+    .collage, .ranking{ width: 56px; height: 56px; }
   }
 
   .collage{
@@ -164,6 +164,29 @@
   .collage span:nth-child(7){ background: var(--accent-soft); }
   .collage span:nth-child(8){ background: var(--accent); opacity: 0.35; }
   .collage span:nth-child(9){ background: var(--ink); opacity: 0.15; }
+
+  .ranking{
+    width: 88px;
+    height: 88px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    padding: 12px 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-shrink: 0;
+  }
+  .ranking span{
+    display: block;
+    height: 6px;
+    border-radius: 3px;
+    background: var(--accent);
+  }
+  .ranking span:nth-child(1){ width: 100%; }
+  .ranking span:nth-child(2){ width: 78%; background: var(--gold); opacity: 0.9; }
+  .ranking span:nth-child(3){ width: 60%; opacity: 0.6; }
+  .ranking span:nth-child(4){ width: 45%; background: var(--gold); opacity: 0.55; }
+  .ranking span:nth-child(5){ width: 28%; opacity: 0.3; }
 
   .project-body{ min-width: 0; }
   .project-head{
@@ -251,6 +274,14 @@
     font-weight: 500;
   }
   .case-study p{ margin: 0; max-width: 62ch; }
+  .case-study code{
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    background: var(--surface-alt);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 0.05em 0.4em;
+    font-size: 0.85em;
+  }
 
   footer{
     margin-top: 3.5rem;
@@ -323,6 +354,43 @@
               <div>
                 <h4>Result</h4>
                 <p>Once tracks are pulled, albums are deduplicated by ID before the grid is built. From there the user can switch between square and rectangular layouts, resize the grid with a slider, and export the result as a PNG.</p>
+              </div>
+            </div>
+          </details>
+        </div>
+      </article>
+
+      <article class="project" data-repo="BlueKeyboard013/FirstThousandWords">
+        <div class="ranking" aria-hidden="true">
+          <span></span><span></span><span></span><span></span><span></span>
+        </div>
+        <div class="project-body">
+          <div class="project-head">
+            <h3 class="project-title">First 1000 Words</h3>
+            <span class="project-links"><a href="https://github.com/BlueKeyboard013/FirstThousandWords" target="_blank" rel="noopener">Code ↗</a></span>
+          </div>
+          <p class="project-summary">Reorders the ~1000 most useful words to learn in a new language around a learner's own interests and profession, instead of handing everyone the same generic frequency list.</p>
+          <div class="tags">
+            <span class="tag">Python</span>
+            <span class="tag">FastAPI</span>
+            <span class="tag">React</span>
+            <span class="tag">TypeScript</span>
+            <span class="tag">Vite</span>
+          </div>
+          <details>
+            <summary>How it works</summary>
+            <div class="case-study">
+              <div>
+                <h4>Problem</h4>
+                <p>A generic "top 1000 words" list spends a learner's time on whatever is statistically common in a text corpus, not on what they'll actually use — and it quietly drops lower-frequency words that would be genuinely useful to, say, an engineer or a parent.</p>
+              </div>
+              <div>
+                <h4>Approach</h4>
+                <p>A short questionnaire across about fifteen topic modules — profession, interests, life context — builds a personal topic profile. Each word's frequency score is then re-ranked as <code>frequency × (1 + boost × topic_weight)</code>, so topically relevant words rise above the generic ranking. Grammatical function words — articles, pronouns, prepositions — are tracked separately, since those stay mandatory regardless of topic.</p>
+              </div>
+              <div>
+                <h4>Result</h4>
+                <p>The output is 1000 ranked words with English glosses and Zipf frequency scores, currently for Spanish and French, built on a frequency corpus (<code>wordfreq</code>) that extends to roughly 40 languages. The results view supports search, topic filtering, CSV export, and "I know this" checkboxes that persist between visits.</p>
               </div>
             </div>
           </details>
