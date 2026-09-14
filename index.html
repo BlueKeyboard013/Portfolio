@@ -296,7 +296,7 @@
   }
   footer a{ color: var(--accent); text-decoration: none; }
   footer a:hover{ text-decoration: underline; }
-  .last-commit{ font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 0.8rem; }
+  .last-commit{ font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 0.8rem; display: block; margin-bottom: 1.5rem; color: var(--ink-secondary); }
 
   @media (prefers-reduced-motion: reduce){
     *{ transition: none !important; }
@@ -315,6 +315,8 @@
       <a href="mailto:jondevlaurent@gmail.com">jondevlaurent@gmail.com</a>
     </nav>
   </header>
+
+  <span id="last-commit" class="last-commit">Checking latest activity…</span>
 
   <main>
     <p class="eyebrow">Projects</p>
@@ -367,7 +369,7 @@
         <div class="project-body">
           <div class="project-head">
             <h3 class="project-title">First 1000 Words</h3>
-            <span class="project-links"><a href="https://github.com/BlueKeyboard013/FirstThousandWords" target="_blank" rel="noopener">Code ↗</a></span>
+            <span class="project-links"><a href="https://first-thousand-words-web.onrender.com/" target="_blank" rel="noopener">Live ↗</a> · <a href="https://github.com/BlueKeyboard013/FirstThousandWords" target="_blank" rel="noopener">Code ↗</a></span>
           </div>
           <p class="project-summary">Reorders the ~1000 most useful words to learn in a new language around a learner's own interests and profession, instead of handing everyone the same generic frequency list.</p>
           <div class="tags">
@@ -401,7 +403,6 @@
   </main>
 
   <footer>
-    <span id="last-commit" class="last-commit">Checking latest activity…</span>
     <a href="mailto:jondevlaurent@gmail.com">Get in touch ↗</a>
   </footer>
 
