@@ -140,7 +140,36 @@
   .project:hover{ border-color: var(--accent); }
   @media (max-width: 540px){
     .project{ grid-template-columns: 1fr; }
-    .collage, .ranking{ width: 56px; height: 56px; }
+    .collage, .ranking, .stack{ width: 56px; height: 56px; }
+  }
+
+  .stack{
+    position: relative;
+    width: 88px;
+    height: 88px;
+    flex-shrink: 0;
+  }
+  .stack span{
+    position: absolute;
+    inset: 0;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+  }
+  .stack span:nth-child(1){ background: var(--accent-soft); transform: rotate(-8deg); }
+  .stack span:nth-child(2){ background: var(--surface-alt); transform: rotate(6deg); }
+  .stack span:nth-child(3){
+    background: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .stack span:nth-child(3)::before{
+    content: "";
+    width: 60%;
+    height: 3px;
+    background: var(--accent-ink);
+    opacity: 0.7;
+    border-radius: 2px;
   }
 
   .collage{
@@ -322,6 +351,41 @@
     <p class="eyebrow">Projects</p>
 
     <div class="projects">
+
+      <article class="project" data-repo="BlueKeyboard013/unfold">
+        <div class="stack" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </div>
+        <div class="project-body">
+          <div class="project-head">
+            <h3 class="project-title">Unfold</h3>
+            <span class="project-links"><a href="https://unfold-web-t4bd.onrender.com/" target="_blank" rel="noopener">Live ↗</a> · <a href="https://github.com/BlueKeyboard013/unfold" target="_blank" rel="noopener">Code ↗</a></span>
+          </div>
+          <p class="project-summary">A Tinder-style swipe deck for discovering personal fashion style — swipe through outfit images and get a breakdown of which style categories you actually gravitate toward.</p>
+          <div class="tags">
+            <span class="tag">React</span>
+            <span class="tag">TypeScript</span>
+            <span class="tag">Vite</span>
+          </div>
+          <details>
+            <summary>How it works</summary>
+            <div class="case-study">
+              <div>
+                <h4>Problem</h4>
+                <p>Asking someone to describe their style in words tends to surface labels they already know, not the styles they'd actually respond to if they saw them.</p>
+              </div>
+              <div>
+                <h4>Approach</h4>
+                <p>A shuffled deck of labeled outfit images is built so the first 20 cards guarantee two images from every style category, ensuring the swipe signal covers all categories before the deck randomizes further. Each swipe (like/dislike) is recorded against the card's style label.</p>
+              </div>
+              <div>
+                <h4>Result</h4>
+                <p>Once the minimum swipe threshold is hit, results are computed as each style's share of total likes and shown as ranked, weighted bars — a style profile built from reactions instead of self-reporting.</p>
+              </div>
+            </div>
+          </details>
+        </div>
+      </article>
 
       <article class="project" data-repo="BlueKeyboard013/AlbumCollage">
         <div class="collage" aria-hidden="true">
